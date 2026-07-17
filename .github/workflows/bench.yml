@@ -1,0 +1,35 @@
+# On-demand benchmark run (costs real API tokens, so never triggered automatically).
+name: Benchmark
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Verifier model id"
+        required: false
+        default: "claude-opus-4-8"
+
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v8.3.2
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: uv sync --dev
+      - name: Run benchmark
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: >-
+          uv run elenchus bench
+          --model "${{ inputs.model }}"
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: bench-report
+          path: |
+            bench-report.md
+            bench-report.json
