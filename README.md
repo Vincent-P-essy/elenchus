@@ -13,12 +13,6 @@ A claim isn't true because a model said it. Elenchus pairs any LLM claim
 with an independent adversarial verifier that tries to refute it before
 it's trusted — and measures, empirically, when that actually helps.
 
-## Execution preview
-
-![elenchus execution](docs/screenshots/execution.png)
-
-Local execution of `python -m pytest -v --tb=short tests/test_domains.py tests/test_claim.py`. The input and output shown come from the repository example or test fixtures. [Verification](docs/verification.md).
-
 ## Where this came from
 
 The same shape kept showing up in three unrelated projects: a code
